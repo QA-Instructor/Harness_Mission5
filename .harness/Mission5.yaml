@@ -33,6 +33,6 @@ pipeline:
                   identifier: install_step
                   spec:
                     connectorRef: dockerhubpat
-                    image: maven:3.9.9-amazoncorretto-8-al2023
+                    image: amazoncorretto:11
                     shell: Sh
                     command: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
