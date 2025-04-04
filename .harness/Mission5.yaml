@@ -1,0 +1,38 @@
+pipeline:
+  name: Mission5
+  identifier: Mission5
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: orglevelmission5connector
+        build: <+input>
+  stages:
+    - stage:
+        name: Do maven install
+        identifier: Do_maven_install
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: install step
+                  identifier: install_step
+                  spec:
+                    connectorRef: dockerhubpat
+                    image: maven:3-jdk-10
+                    shell: Sh
+                    command: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
