@@ -33,24 +33,23 @@ pipeline:
                     connectorRef: dockerhubpat
                     image: maven:amazoncorretto
                     shell: Sh
-                    command: mvn install -DskipTests=true -Dmaven.javadoc.skip=true
-                      -B -V
+                    command: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
               - step:
-                  type: Plugin
-                  name: nexus plugin step
-                  identifier: nexus_plugin_step
+                  type: Run
+                  name: docker step push to nexus
+                  identifier: docker_step_push_to_nexus
                   spec:
-                    connectorRef: dockerhubpat
-                    image: harnesscommunity/publish-nexus-repository:1.1.1
-                    settings:
-                      Username: bob
-                      password: <+secrets.getValue("nexus_password")>
-                      ServerUrl: <+stage.variables.nexus_url>
-                      Repository: <+stage.variables.nexus_repo>
-                      attributes: -CgroupId=com.qa -CartifactId=hello-world-maven
-                        -Cversion=1.0 -Aextension=jar -Aclassifier=bin
-                      Format: maven2
-                      Filename: ./target/hello-world-maven-1.0-SNAPSHOT.jar
+                    shell: Sh
+                    command: |-
+                      docker run --rm \
+                        -e PLUGIN_USERNAME=nexus-connector-user \
+                        -e PLUGIN_PASSWORD=2025NexusHarness \
+                        -e PLUGIN_SERVER_URL= http://35.210.166.33:8081/\
+                        -e PLUGIN_FILENAME=./target/hello-world-maven-1.0-SNAPSHOT.jar \
+                        -e PLUGIN_FORMAT=maven2 \
+                        -e PLUGIN_REPOSITORY=maven-snapshpts \
+                        -e PLUGIN_ATTRIBUTES="-CgroupId=com.qa -CartifactId=hello-world-example -Cversion=1.0 -Aextension=jar -Aclassifier=bin" \
+                        harnesscommunity/drone-nexus-publish
         variables:
           - name: nexus_repo
             type: String
