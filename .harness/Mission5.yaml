@@ -46,7 +46,7 @@ pipeline:
                     settings:
                       username: nexus-connector-user
                       password: <+secrets.getValue("nexus_password")>
-                      server_url: http://35.210.166.33:8081
+                      serverurl: http://35.210.166.33:8081
                       filename: ./target/hello-maven-1.0.jar
                       format: maven2
                       repository: maven-public
