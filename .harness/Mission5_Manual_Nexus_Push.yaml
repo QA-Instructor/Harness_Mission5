@@ -45,6 +45,7 @@ pipeline:
                       echo "HELLO"
                       pwd
                       ls target -l
+                      cp ./target/hello-world-1.0.jar myjar.jar
               - step:
                   type: Run
                   name: docker step push to nexus
