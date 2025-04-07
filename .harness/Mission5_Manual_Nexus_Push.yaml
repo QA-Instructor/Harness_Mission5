@@ -43,7 +43,8 @@ pipeline:
                     shell: Sh
                     command: |-
                       echo "HELLO"
-                      ls -al
+                      pwd
+                      ls target -l
               - step:
                   type: Run
                   name: docker step push to nexus
