@@ -44,7 +44,7 @@ pipeline:
                     connectorRef: dockerhubpat
                     image: harnesscommunity/publish-nexus-repository:1.1.1
                     settings:
-                      Username: nexus-connector-user
+                      Username: bob
                       password: <+secrets.getValue("nexus_password")>
                       ServerUrl: <+stage.variables.nexus_url>
                       Repository: <+stage.variables.nexus_repo>
