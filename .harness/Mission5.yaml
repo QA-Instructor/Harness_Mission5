@@ -36,3 +36,18 @@ pipeline:
                     image: maven:amazoncorretto
                     shell: Sh
                     command: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+              - step:
+                  type: Plugin
+                  name: nexus plugin step
+                  identifier: nexus_plugin_step
+                  spec:
+                    connectorRef: dockerhubpat
+                    image: harnesscommunity/publish-nexus-repository:1.1.1
+                    settings:
+                      username: nexus-connector-user
+                      password: <+secrets.getValue("nexus_password")>
+                      server_url: http://35.210.166.33:8081
+                      filename: ./target/hello-maven-1.0.jar
+                      format: maven2
+                      repository: maven-public
+                      attributes: "\"-CgroupId=com.qa -CartifactId=hello-maven -Cversion=1.0 -Aextension=jar -Aclassifier=bin\""
