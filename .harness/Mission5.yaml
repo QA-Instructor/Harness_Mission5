@@ -46,8 +46,19 @@ pipeline:
                     settings:
                       username: nexus-connector-user
                       password: <+secrets.getValue("nexus_password")>
-                      server_url: <+stage.getValue("nexus_server_url")>
-                      repository: <+stage.getValue("nexus_repository")>
+                      server_url: <+stage.variables.nexus_url>
+                      repository: <+stage.variables.nexus_repo>
                       attributes: "-CgroupId=com.qa -CartifactId=hello-world-maven -Cversion=1.0 -Aextension=jar -Aclassifier=bin"
                       format: maven2
                       filename: ./target/hello-world-maven-1.0-SNAPSHOT.jar
+        variables:
+          - name: nexus_repo
+            type: String
+            description: ""
+            required: false
+            value: maven-public
+          - name: nexus_url
+            type: String
+            description: ""
+            required: false
+            value: http://35.210.166.33:8081/
