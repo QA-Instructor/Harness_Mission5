@@ -50,4 +50,4 @@ pipeline:
                       filename: ./target/hello-maven-1.0.jar
                       format: maven2
                       repository: maven-public
-                      attributes: "\"-CgroupId=com.qa -CartifactId=hello-maven -Cversion=1.0 -Aextension=jar -Aclassifier=bin\""
+                      attributes: "-CgroupId=com.qa -CartifactId=hello-maven -Cversion=1.0 -Aextension=jar -Aclassifier=bin"
