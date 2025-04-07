@@ -47,7 +47,7 @@ pipeline:
                       username: nexus-connector-user
                       password: <+secrets.getValue("nexus_password")>
                       server_url: http://35.210.166.33:8081/
-                      filename: ./target/hello-world-maven-1.0-SNAPSHOT.jar
-                      format: maven2
-                      repository: http://35.210.166.33:8081/repository/maven-public/
+                      repository: maven-releases
                       attributes: "-CgroupId=com.qa -CartifactId=hello-world-maven -Cversion=1.0 -Aextension=jar -Aclassifier=bin"
+                      format: maven2
+                      filename: ./target/hello-world-maven-1.0-SNAPSHOT.jar
