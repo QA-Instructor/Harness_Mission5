@@ -40,10 +40,11 @@ pipeline:
                   identifier: docker_step_push_to_nexus
                   spec:
                     shell: Sh
-                    command: docker run --rm -e PLUGIN_USERNAME=nexus-connector-user -e PLUGIN_PASSWORD=2025NexusHarness -e PLUGIN_SERVER_URL=http://35.210.166.33:8081/ -e PLUGIN_FILENAME=/harness/target/hello-world-maven-1.0-SNAPSHOT.jar -e PLUGIN_FORMAT=maven2 -e PLUGIN_REPOSITORY=maven-snapshots -e PLUGIN_ATTRIBUTES="-CgroupId=com.qa -CartifactId=hello-world-example -Cversion=1.0 -Aextension=jar -Aclassifier=bin" harnesscommunity/publish-nexus-repository:1.1.1
+                    command: docker run --rm -e PLUGIN_USERNAME=nexus-connector-user -e PLUGIN_PASSWORD=2025NexusHarness -e PLUGIN_SERVER_URL=http://35.210.166.33:8081/ -e PLUGIN_FILENAME=./harness/target/hello-world-maven-1.0-SNAPSHOT.jar -e PLUGIN_FORMAT=maven2 -e PLUGIN_REPOSITORY=maven-snapshots -e PLUGIN_ATTRIBUTES="-CgroupId=com.qa -CartifactId=hello-world-example -Cversion=1.0 -Aextension=jar -Aclassifier=bin" harnesscommunity/publish-nexus-repository:1.1.1
                     privileged: true
                     envVariables:
                       PLUGIN_USERNAME: <+stage.variables.nexus_user>
+                      PLUGIN_FILENAME: <+stage.variables.jar_file>
         variables:
           - name: nexus_repo
             type: String
