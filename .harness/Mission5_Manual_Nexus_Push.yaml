@@ -27,13 +27,13 @@ pipeline:
             steps:
               - step:
                   type: Run
-                  name: install step
-                  identifier: install_step
+                  name: package step
+                  identifier: package_step
                   spec:
                     connectorRef: dockerhubpat
                     image: maven:amazoncorretto
                     shell: Sh
-                    command: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+                    command: mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
               - step:
                   type: Run
                   name: docker step push to nexus
