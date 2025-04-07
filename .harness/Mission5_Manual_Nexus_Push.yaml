@@ -37,6 +37,15 @@ pipeline:
                     command: mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
               - step:
                   type: Run
+                  name: list filenames
+                  identifier: list_filenames
+                  spec:
+                    shell: Sh
+                    command: |-
+                      echo "HELLO"
+                      ls -al
+              - step:
+                  type: Run
                   name: docker step push to nexus
                   identifier: docker_step_push_to_nexus
                   spec:
