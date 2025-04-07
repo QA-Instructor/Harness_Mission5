@@ -44,13 +44,13 @@ pipeline:
                     connectorRef: dockerhubpat
                     image: harnesscommunity/publish-nexus-repository:1.1.1
                     settings:
-                      username: nexus-connector-user
+                      Username: nexus-connector-user
                       password: <+secrets.getValue("nexus_password")>
-                      server_url: <+stage.variables.nexus_url>
-                      repository: <+stage.variables.nexus_repo>
+                      ServerUrl: <+stage.variables.nexus_url>
+                      Repository: <+stage.variables.nexus_repo>
                       attributes: "-CgroupId=com.qa -CartifactId=hello-world-maven -Cversion=1.0 -Aextension=jar -Aclassifier=bin"
-                      format: maven2
-                      filename: ./target/hello-world-maven-1.0-SNAPSHOT.jar
+                      Format: maven2
+                      Filename: ./target/hello-world-maven-1.0-SNAPSHOT.jar
         variables:
           - name: nexus_repo
             type: String
