@@ -17,6 +17,7 @@ pipeline:
           cloneCodebase: true
           caching:
             enabled: true
+            paths: []
           platform:
             os: Linux
             arch: Amd64
@@ -45,6 +46,11 @@ pipeline:
                     envVariables:
                       PLUGIN_USERNAME: <+stage.variables.nexus_user>
                       PLUGIN_FILENAME: <+stage.variables.jar_file>
+          sharedPaths:
+            - /root/.m2
+            - /harness
+          buildIntelligence:
+            enabled: false
         variables:
           - name: nexus_repo
             type: String
