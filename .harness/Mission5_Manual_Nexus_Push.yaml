@@ -48,7 +48,7 @@ pipeline:
                       PLUGIN_FILENAME: <+stage.variables.jar_file>
           sharedPaths:
             - /root/.m2
-            - /harness
+            - /shared/myfolder
           buildIntelligence:
             enabled: false
         variables:
