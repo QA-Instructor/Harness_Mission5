@@ -1,0 +1,66 @@
+pipeline:
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: orglevelmission5connector
+        build: <+input>
+  stages:
+    - stage:
+        name: Do maven install
+        identifier: Do_maven_install
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: install step
+                  identifier: install_step
+                  spec:
+                    connectorRef: dockerhubpat
+                    image: maven:amazoncorretto
+                    shell: Sh
+                    command: mvn install -DskipTests=true -Dmaven.javadoc.skip=true
+                      -B -V
+              - step:
+                  type: Plugin
+                  name: nexus plugin step
+                  identifier: nexus_plugin_step
+                  spec:
+                    connectorRef: dockerhubpat
+                    image: harnesscommunity/publish-nexus-repository:1.1.1
+                    settings:
+                      Username: bob
+                      password: <+secrets.getValue("nexus_password")>
+                      ServerUrl: <+stage.variables.nexus_url>
+                      Repository: <+stage.variables.nexus_repo>
+                      attributes: -CgroupId=com.qa -CartifactId=hello-world-maven
+                        -Cversion=1.0 -Aextension=jar -Aclassifier=bin
+                      Format: maven2
+                      Filename: ./target/hello-world-maven-1.0-SNAPSHOT.jar
+        variables:
+          - name: nexus_repo
+            type: String
+            description: ""
+            required: false
+            value: maven-public
+          - name: nexus_url
+            type: String
+            description: ""
+            required: false
+            value: http://35.210.166.33:8081/
+  identifier: Mission5_Manual_Nexus_Push
+  name: Mission5 - Manual Nexus Push
