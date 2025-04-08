@@ -53,8 +53,6 @@ pipeline:
                       echo "GOODBYE"
                     outputVariables:
                       - name: jar_name
-                        type: String
-                        value: unknown
               - step:
                   type: Run
                   name: curl to nexus
@@ -63,6 +61,8 @@ pipeline:
                     shell: Sh
                     command: |-
                       echo "CURL"
+                      echo $jar_name
+                      echo <+steps.list_filenames.output.outputVariables.jar_name>
                       curl -v -u nexus-connector-user:2025NexusHarness -F "maven2.generate-pom=false" -F "maven2.asset1=@/harness/pom.xml" -F "maven2.asset1.extension=pom" -F "maven2.asset2=@/harness/target/hello-world-1.0.jar;type=application/java-archive" -F "maven2.asset2.extension=jar" "http://35.210.166.33:8081/service/rest/v1/components?repository=maven-releases"
                       echo "END CURL"
                   when:
