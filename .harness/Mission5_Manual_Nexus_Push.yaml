@@ -45,9 +45,7 @@ pipeline:
                       echo "HELLO"
                       pwd
                       ls target -l
-                      cp ./target/hello-world-1.0.jar myjar.jar
-                      ls target -l
-                      ls 
+                      ls
               - step:
                   type: Run
                   name: curl to nexus
