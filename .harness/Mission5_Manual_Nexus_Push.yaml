@@ -45,9 +45,10 @@ pipeline:
                       echo "HELLO"
                       cd target
                       ls *.jar | head -1
-                      export jarName = ls *.jar | head -1
+                      export jar_name = ls *.jar | head -1
+                      echo jar_name
                     outputVariables:
-                      - name: jarName
+                      - name: jar_name
                         type: String
                         value: unknown
               - step:
