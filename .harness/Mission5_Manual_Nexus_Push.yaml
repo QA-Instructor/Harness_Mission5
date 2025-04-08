@@ -46,17 +46,17 @@ pipeline:
                       pwd
                       ls target -l
                       cp ./target/hello-world-1.0.jar myjar.jar
+                      ls target -l
               - step:
                   type: Run
-                  name: docker step push to nexus
-                  identifier: docker_step_push_to_nexus
+                  name: curl to nexus
+                  identifier: curl_ti_nexus
                   spec:
                     shell: Sh
-                    command: docker run --rm -e PLUGIN_USERNAME=nexus-connector-user -e PLUGIN_PASSWORD=2025NexusHarness -e PLUGIN_SERVER_URL=http://35.210.166.33:8081/ -e PLUGIN_FILENAME=/target/hello-world-1.0.jar -e PLUGIN_FORMAT=maven2 -e PLUGIN_REPOSITORY=maven-snapshots -e PLUGIN_ATTRIBUTES="-CgroupId=com.qa -CartifactId=hello-world-example -Cversion=1.0 -Aextension=jar -Aclassifier=bin" harnesscommunity/publish-nexus-repository:1.1.1
-                    privileged: true
-                    envVariables:
-                      PLUGIN_USERNAME: <+stage.variables.nexus_user>
-                      PLUGIN_FILENAME: <+stage.variables.jar_file>
+                    command: |-
+                      echo "CURL"
+                      curl -v -u nexus-connector-user:2025NexusHarness -F "maven2.generate-pom=false" -F "maven2.asset1=@./target/pom.xml" -F "maven2.asset1.extension=pom" -F "maven2.asset2=@./target/hello-world-1.0.jar;type=application/java-archive" -F "maven2.asset2.extension=jar" "http://http://35.210.166.33:8081/service/rest/v1/components?repository=maven-releases"
+                      echo "END CURL"
           sharedPaths:
             - /root/.m2
             - /shared/myfolder
