@@ -43,10 +43,10 @@ pipeline:
                     shell: Sh
                     command: |-
                       echo "HELLO"
-                      pwd
-                      ls target -l
-                      ls target/*.jar
-                      ls target/*.jar | head -1
+                      export pomName = ls pom.xml 
+                      cd target
+                      ls *.jar | head -1
+                      export jarName = ls *.jar | head -1
               - step:
                   type: Run
                   name: curl to nexus
