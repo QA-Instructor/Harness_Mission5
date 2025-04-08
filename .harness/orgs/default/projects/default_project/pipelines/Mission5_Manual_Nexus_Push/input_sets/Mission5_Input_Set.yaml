@@ -1,0 +1,14 @@
+inputSet:
+  name: Mission5 Input Set
+  identifier: Mission5_Input_Set
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Mission5_Manual_Nexus_Push
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
