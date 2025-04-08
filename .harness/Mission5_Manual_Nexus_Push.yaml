@@ -40,14 +40,17 @@ pipeline:
                   name: list filenames
                   identifier: list_filenames
                   spec:
-                    shell: Sh
+                    shell: Bash
                     command: |-
                       echo "HELLO"
                       cd target
+                      echo "Changed Directory"
                       ls *.jar | head -1
-                      jar_name=ls *.jar | head -1
+                      jar_name=$(ls *.jar | head -1)
+                      echo "Created variable"
                       export jar_name
-                      echo $jar_name
+                      echo "Filename", $jar_name
+                      echo "GOODBYE"
                     outputVariables:
                       - name: jar_name
                         type: String
